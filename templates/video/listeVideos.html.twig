@@ -211,7 +211,9 @@ iframe {
         <div class="video-card">
             <div class="video-header">
                 <h2>{{ laVideo.titre }}</h2>
+                
             </div>
+            
             <div class="video-body">
                 <a href="{{path('ficheVideo', { id: laVideo.id })}}" target="_blank">
                     <img src="https://img.youtube.com/vi/{{ laVideo.youtubeId }}/0.jpg" alt="Aperçu de la vidéo {{ laVideo.titre }}" width="300">

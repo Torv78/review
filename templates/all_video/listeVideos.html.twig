@@ -276,7 +276,10 @@ iframe {
 
 </style>
 
+
+
 <div class="filter-wrapper">
+
     <div class="filter-form">
         {{ form_start(filterForm, { 'attr': { 'class': 'form-inline' } }) }}
             <div class="filter-group">
@@ -289,13 +292,37 @@ iframe {
 </div>
 <h1 style="color: #ffffff;">Toutes les Vidéos</h1>
 
+<!-- Ajout de la barre de recherche -->
+<div>
+    <input type="text" id="searchInput" placeholder="Rechercher une vidéo..." onkeyup="filterVideos()">
+</div>
+
+<script>
+function filterVideos() {
+    var input, filter, videos, video, i, txtValue;
+    input = document.getElementById('searchInput');
+    filter = input.value.toLowerCase();
+    videos = document.getElementsByClassName('video-item'); // Assurez-vous que chaque vidéo a cette classe
+
+    for (i = 0; i < videos.length; i++) {
+        video = videos[i];
+        txtValue = video.textContent || video.innerText;
+        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+            video.parentElement.style.display = ""; // Affiche le conteneur de la vidéo
+        } else {
+            video.parentElement.style.display = "none"; // Masque le conteneur de la vidéo
+        }
+    }
+}
+</script>
 
 <div class="video-container">
     {% for laVideo in lesVideos %}
         <div class="video-card">
             <div class="video-header">
                 <h2>{{ laVideo.titre }}</h2>
-            </div>
+                <div class="video-item">{{ laVideo.titre }}</div>
+            
             <div class="video-body">
                 <a href="{{path('allficheVideo', { id: laVideo.id })}}" >
                     <img src="https://img.youtube.com/vi/{{ laVideo.youtubeId }}/0.jpg" alt="Aperçu de la vidéo {{ laVideo.titre }}" width="300">
@@ -308,7 +335,7 @@ iframe {
                 <p><strong>Créateur :</strong> {{ laVideo.createur }}</p>
                 <p><strong>Date de publication :</strong> {{ laVideo.datePublication|date('d/m/Y H:i') }}</p>
             </div>
-
+</div>
             
         </div>
     {% else %}
